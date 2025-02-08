@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: PlayerConfig
   m_EditorClassIdentifier: 
   Level: 0
-  SelectedSkinID: 0
-  PlayerSkins: []
   MaxHP: 100
-  Speed: 0
+  Speed: 1
   AttackRange: 0
   MagicalAttackRange: 0
   AttackSpeed: 0

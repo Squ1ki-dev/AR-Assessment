@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 890492a37cd19244a8dfbc4a38f6ff66, type: 3}
   m_Name: WaveSystem
   m_EditorClassIdentifier: 
-  CurrentWave: 2
+  CurrentWave: 1
   BaseWeakEnemyCount: 10
   BaseNormalEnemyCount: 5
   EnemyIncrementPerWave: 2

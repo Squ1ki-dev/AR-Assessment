@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 2226570383844835516}
   - component: {fileID: 6624719753169348046}
   - component: {fileID: 290988884533859076}
+  - component: {fileID: 3355485852976898487}
+  - component: {fileID: 7912815021685715474}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -140,6 +142,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerHealth: {fileID: 6624719753169348046}
   _deathFx: {fileID: 0}
+--- !u!54 &3355485852976898487
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486833101314850461}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &7912815021685715474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486833101314850461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d9ef90204597c04ab51a2b4b67b476a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerConfig: {fileID: 11400000, guid: b7e89b45e6bb249499fe1078f68ee029, type: 2}
 --- !u!1 &2256970656380140902
 GameObject:
   m_ObjectHideFlags: 0

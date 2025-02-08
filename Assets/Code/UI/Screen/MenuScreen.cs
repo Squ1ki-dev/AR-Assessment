@@ -29,23 +29,21 @@ namespace Code.UI.Screens
 
         private void OnEnable()
         {
-            _playBtn.onClick.AddListener(async() => await OnPlayButtonPressed());
+            _playBtn.onClick.AddListener(OnPlayButtonPressed);
             _exitBtn.onClick.AddListener(ExitGame);
         }
 
         private void ExitGame() => Application.Quit();
-        private async UniTask OnPlayButtonPressed()
+        private void OnPlayButtonPressed()
         {
             _playBtn.enabled = false;
-            _planeManager.enabled = true;
-            _gameState.ChangeState(GameStates.Game);
+            _gameState.ChangeState(GameStates.PlayerPlacementState);
             _panelManager.CloseAllPanels();
-            await _waveSpawner.StartNextWave();
         }
 
         private void OnDestroy()
         {
-            _playBtn.onClick.RemoveListener(async() => await OnPlayButtonPressed());
+            _playBtn.onClick.RemoveListener(OnPlayButtonPressed);
             _exitBtn.onClick.RemoveListener(ExitGame);
         }
     }

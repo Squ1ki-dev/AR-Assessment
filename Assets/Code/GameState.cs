@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using Zenject;
 using Code.UI;
+using UnityEngine.XR.ARFoundation;
 
 namespace Code
 {
@@ -12,6 +13,7 @@ namespace Code
     {
         None,
         Menu,
+        PlayerPlacementState,
         Game,
         Lose,
         Finish
@@ -21,6 +23,7 @@ namespace Code
     {
         [SerializeField] private int _menuIndex, _finishIndex, _loseIndex;
         [SerializeField] private GameObject _blockerImg;
+        [SerializeField] private ARPlaneManager _planeManager;
 
         private PanelManager _panelManager;
         public GameStates CurrentState = GameStates.None;
@@ -45,6 +48,10 @@ namespace Code
             {
                 case GameStates.Menu:
                     _panelManager.OpenPanelByIndex(_menuIndex);
+                    break;
+
+                case GameStates.PlayerPlacementState:
+                    _panelManager.CloseAllPanels();
                     break;
 
                 case GameStates.Game:

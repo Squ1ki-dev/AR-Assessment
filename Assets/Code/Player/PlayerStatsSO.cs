@@ -7,18 +7,12 @@ namespace Code.Player
     public class PlayerStatsSO : ScriptableObject
     {
         public int Level;
-        public int SelectedSkinID;
-        public List<PlayerSkins> PlayerSkins;
         public int MaxHP = 100;
         public float Speed;
         public float AttackRange;
-        public float MagicalAttackRange;
         public float AttackSpeed;
-        public float MagicalAttackSpeed;
         public float Damage;
         public float AttackCooldownDuration;
-        public float KnivesDamage;
-        public bool IsSwordsman;
     }
 
     [System.Serializable]
