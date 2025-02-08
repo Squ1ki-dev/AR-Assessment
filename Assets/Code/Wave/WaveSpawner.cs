@@ -148,6 +148,7 @@ namespace Code.Wave
         {
             for (int i = 0; i < count; i++)
             {
+                await UniTask.Delay(100);
                 UpdatePlacementPose();
 
                 if (!placementPoseIsValid)
@@ -169,7 +170,10 @@ namespace Code.Wave
                     _activeEnemyCount++;
                     EnemyDeath enemyDeath = enemy.GetComponent<EnemyDeath>();
                     if (enemyDeath != null)
+                    {
+                        enemyDeath.Happened -= HandleEnemyDeath;
                         enemyDeath.Happened += HandleEnemyDeath;
+                    }
                 }
 
                 await UniTask.Delay(1000);
@@ -185,9 +189,16 @@ namespace Code.Wave
                 return null;
             }
 
+            if (_enemyParent.Find(enemyPrefab.name) != null)
+            {
+                Debug.LogWarning($"Duplicate enemy detected: {enemyPrefab.name}");
+                return null;
+            }
+
             GameObject enemy = _container.InstantiatePrefab(enemyPrefab, position, Quaternion.identity, _enemyParent);
             return enemy;
         }
+
 
         private Vector3 GetValidSpawnPosition()
         {

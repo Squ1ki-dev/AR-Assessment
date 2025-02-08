@@ -17,16 +17,13 @@ namespace Code.UI.Screens
     public class LoseScreen : WindowBase
     {
         [SerializeField] private Button _restartBtn, _exitBtn;
-        [SerializeField] private WaveSetupSO _waveConfig;
-        private WaveSpawner _waveSpawner;
         private PanelManager _panelManager;
         private GameState _gameState;
 
         [Inject]
-        private void Construct(GameState gameState, WaveSpawner waveSystem, PanelManager panelManager)
+        private void Construct(GameState gameState, PanelManager panelManager)
         {
             _gameState = gameState;
-            _waveSpawner = waveSystem;
             _panelManager = panelManager;
         }
 
