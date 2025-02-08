@@ -40,8 +40,5 @@ namespace Code.Player
             await UniTask.Delay(delayMilliseconds);
             ObjectPool.ReturnToPool(obj);
         }
-
-        // private int MagicalHit() =>
-        //     Physics.OverlapSphereNonAlloc(_attackPoint.position, _playerConfig.AttackRange, _hits, _layerMask);
     }
 }
