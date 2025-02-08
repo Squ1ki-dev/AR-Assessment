@@ -7,7 +7,7 @@ using UnityEngine;
 public class EnemyDeath : MonoBehaviour
 {
     [SerializeField] private EnemyHealth _health;
-    [SerializeField] private GameObject deathFx;
+    [SerializeField] private GameObject _deathFx;
     public event Action Happened;
 
     private void Start() => _health.HealthChanged += HealthChanged;
@@ -23,7 +23,7 @@ public class EnemyDeath : MonoBehaviour
     {
         _health.HealthChanged -= HealthChanged;
 
-        StartCoroutine(DeathFX(deathFx));
+        StartCoroutine(DeathFX(_deathFx));
         ObjectPool.ReturnToPool(gameObject);
         Happened?.Invoke();
     }

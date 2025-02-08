@@ -51,7 +51,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
         _damageText.alpha = 1f;
 
         Vector3 initialPosition = _damageText.transform.position;
-        Vector3 targetPosition = initialPosition + new Vector3(0, 1, 0); // Move up in world space
+        Vector3 targetPosition = initialPosition + new Vector3(0, 1, 0);
 
         _damageText.transform.DOMove(targetPosition, 0.5f)
             .SetEase(Ease.OutQuad);

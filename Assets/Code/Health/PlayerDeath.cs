@@ -7,30 +7,24 @@ using Code;
 
 public class PlayerDeath : MonoBehaviour
 {
-    [SerializeField] private PlayerHealth playerHealth;
+    [SerializeField] private PlayerHealth _playerHealth;
     //[SerializeField] private PlayerAttack playerAttack;
     //[SerializeField] private PlayerMove playerMove;
-    [SerializeField] private GameObject deathFx;
+    [SerializeField] private GameObject _deathFx;
     private GameState _gameState;
     private bool _isDead;
 
-    private void Start()
+    public void Construct(GameState gameState)
     {
-        _gameState = FindObjectOfType<GameState>();
-        if (_gameState == null)
-            Debug.LogError("GameState not found in the scene!");
+        _gameState = gameState;
+    }
 
-        playerHealth.HealthChanged += HealthChanged;
-    }
-    
-    private void OnDestroy()
-    {
-        playerHealth.HealthChanged -= HealthChanged;
-    }
+    private void OnEnable() => _playerHealth.HealthChanged += HealthChanged;
+    private void OnDestroy() => _playerHealth.HealthChanged -= HealthChanged;
 
     private void HealthChanged()
     {
-        if(!_isDead && playerHealth.Current <= 0)
+        if(!_isDead && _playerHealth.Current <= 0)
             Die();
     }
 
@@ -40,6 +34,6 @@ public class PlayerDeath : MonoBehaviour
         //playerMove.enabled = false;
         //playerAttack.enabled = false;
         _gameState.ChangeState(GameStates.Lose);
-        Instantiate(deathFx, transform.position, Quaternion.identity);
+        Instantiate(_deathFx, transform.position, Quaternion.identity);
     }
 }

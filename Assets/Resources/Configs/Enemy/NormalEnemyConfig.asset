@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7df72412df55094ab249a778794bb7c, type: 3}
-  m_Name: EnemyConfig
+  m_Name: NormalEnemyConfig
   m_EditorClassIdentifier: 
-  Health: 0
-  XP: 0
-  MovementSpeed: 0
+  Health: 10
+  XP: 10
+  MovementSpeed: 4
   EnemyPrefab: {fileID: 7094201715290280081, guid: d4a05a7d61a5d2346872bed2c0482bc7,
     type: 3}
