@@ -6,6 +6,7 @@ using Zenject;
 using Cysharp.Threading.Tasks;
 using Code.Enemy;
 using Code.Services;
+using Code.UI;
 
 namespace Code.Wave
 {
@@ -20,6 +21,7 @@ namespace Code.Wave
 
         [Inject] private DiContainer _container;
 
+        private PanelManager _panelManager;
         private IAssetLoader _assetLoader;
         private Pose _placementPose;
         [SerializeField] private ARRaycastManager aRRaycastManager;
@@ -31,19 +33,22 @@ namespace Code.Wave
         private float _waveTime;
         private bool _waveActive;
         private bool placementPoseIsValid;
+        private int _activeEnemyCount; // Track number of active enemies
 
         public int CurrentWave => _waveSetup.CurrentWave;
 
         [Inject]
-        public void Construct(IAssetLoader assetLoader)
+        public void Construct(IAssetLoader assetLoader, PanelManager panelManager)
         {
             _assetLoader = assetLoader;
+            _panelManager = panelManager;
         }
 
         private void Start()
         {
             _waveSetup.CurrentWave = PlayerPrefs.GetInt(Constants.Level, 1);
             Debug.Log($"Wave {_waveSetup.CurrentWave}");
+            _activeEnemyCount = 0;
         }
 
         private void Update()
@@ -90,6 +95,8 @@ namespace Code.Wave
 
             _waveSetup.CurrentWave = PlayerPrefs.GetInt(Constants.Level, 1);
             _waveActive = true;
+            _activeEnemyCount = 0; // Reset enemy count
+
             await SpawnEnemies(_waveSetup.CurrentWave);
 
             _waveSetup.CurrentWave++;
@@ -126,7 +133,15 @@ namespace Code.Wave
             await SpawnEnemyGroup(Constants.NormalEnemy, bossWaveNormalEnemies);
 
             Vector3 bossPosition = GetValidSpawnPosition();
-            await LoadAndInstantiateAsync(Constants.BossAddress, bossPosition);
+            GameObject boss = await LoadAndInstantiateAsync(Constants.BossAddress, bossPosition);
+
+            if (boss != null)
+            {
+                _activeEnemyCount++;
+                EnemyDeath enemyDeath = boss.GetComponent<EnemyDeath>();
+                if (enemyDeath != null)
+                    enemyDeath.Happened += HandleEnemyDeath;
+            }
         }
 
         private async UniTask SpawnEnemyGroup(string address, int count)
@@ -148,22 +163,31 @@ namespace Code.Wave
                     continue;
                 }
 
-                await LoadAndInstantiateAsync(address, position);
+                GameObject enemy = await LoadAndInstantiateAsync(address, position);
+                if (enemy != null)
+                {
+                    _activeEnemyCount++;
+                    EnemyDeath enemyDeath = enemy.GetComponent<EnemyDeath>();
+                    if (enemyDeath != null)
+                        enemyDeath.Happened += HandleEnemyDeath;
+                }
+
                 await UniTask.Delay(1000);
             }
         }
 
-        private async UniTask LoadAndInstantiateAsync(string address, Vector3 position)
+        private async UniTask<GameObject> LoadAndInstantiateAsync(string address, Vector3 position)
         {
             GameObject enemyPrefab = await _assetLoader.LoadAssetAsync(address);
             if (enemyPrefab == null)
             {
                 Debug.LogError($"Failed to load Addressable asset at {address}");
-                return;
+                return null;
             }
-            _container.InstantiatePrefab(enemyPrefab, position, Quaternion.identity, _enemyParent);
-        }
 
+            GameObject enemy = _container.InstantiatePrefab(enemyPrefab, position, Quaternion.identity, _enemyParent);
+            return enemy;
+        }
 
         private Vector3 GetValidSpawnPosition()
         {
@@ -177,5 +201,16 @@ namespace Code.Wave
         }
 
         private bool IsBossWave(int waveNumber) => waveNumber % _waveSetup.BossWaveInterval == 0;
+
+        private void HandleEnemyDeath()
+        {
+            _activeEnemyCount--;
+
+            if (_activeEnemyCount <= 0) // No enemies left
+            {
+                _panelManager.OpenPanelByIndex(1);
+                EndWave();
+            }
+        }
     }
 }

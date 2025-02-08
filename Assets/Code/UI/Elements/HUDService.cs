@@ -33,9 +33,15 @@ namespace Code.UI.Elements
         private void CheckForValidState()
         {
             if(_gameState.CurrentState == GameStates.Game)
+            {
+                _levelText.gameObject.SetActive(true);
                 _joystick.SetActive(true);
+            }
             else
+            {
+                _levelText.gameObject.SetActive(false);
                 _joystick.SetActive(false);
+            }
         }
     }
 }

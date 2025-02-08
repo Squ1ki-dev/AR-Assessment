@@ -5,6 +5,7 @@ using CandyCoded.HapticFeedback;
 using Code.Enemy;
 using Code;
 using Zenject;
+using Code.Player;
 
 public class EnemyAttack : MonoBehaviour
 {
@@ -12,23 +13,22 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] private EnemySO enemySO;
     [SerializeField] private Transform attackPoint;
 
+    private PlayerMovement _player;
+
     private const float EffectiveDistance = 0.2f;
-    private Transform _playerTransform;
     private float _attackCooldown;
     private bool _isAttacking;
     private bool _attackIsActive;
     private int _layerMask;
     private Collider[] _hits = new Collider[1];
 
-    [Inject]
-    public void Construct(Transform playerTransform)
-    {
-        _playerTransform = playerTransform;
-    }
-
     private void Awake() => _layerMask = 1 << LayerMask.NameToLayer("Player");
 
-    private void Start() => StartCoroutine(AutoAttackRoutine());
+    private void Start() 
+    {
+        _player = FindObjectOfType<PlayerMovement>();
+        StartCoroutine(AutoAttackRoutine());
+    }
 
     private void UpdateCooldown()
     {
@@ -48,9 +48,9 @@ public class EnemyAttack : MonoBehaviour
 
     private void StartAttack()
     {
-        if (_playerTransform == null) return;
+        if (_player.transform.position == null) return;
 
-        transform.LookAt(_playerTransform);
+        transform.LookAt(_player.transform);
         _isAttacking = true;
 
         Invoke(nameof(OnAttack), 0.2f);

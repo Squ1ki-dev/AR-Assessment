@@ -1,3 +1,4 @@
+using Code.Player;
 using UnityEngine;
 using Zenject;
 
@@ -7,12 +8,11 @@ namespace Code.Enemy
     {
         [SerializeField] private EnemySO _enemyConfig;
         [SerializeField] private float _minDist;
-        private Transform _player;
+        private PlayerMovement _player;
 
-        [Inject]
-        public void Construct(Transform target)
+        private void Start()
         {
-            _player = target;
+            _player = FindObjectOfType<PlayerMovement>();
         }
 
         private void FixedUpdate()
@@ -20,8 +20,8 @@ namespace Code.Enemy
             if (_player == null)
                 return;
 
-            Vector3 direction = (_player.position - transform.position).normalized;
-            float distance = Vector3.Distance(transform.position, _player.position);
+            Vector3 direction = (_player.transform.position - transform.position).normalized;
+            float distance = Vector3.Distance(transform.position, _player.transform.position);
 
             if (distance <= _minDist)
                 return;

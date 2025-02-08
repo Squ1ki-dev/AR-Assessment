@@ -17,13 +17,11 @@ namespace Code.UI.Screens
         [SerializeField] private PanelManager _panelManager;
         [SerializeField] private ARPlaneManager _planeManager;
 
-        private WaveSpawner _waveSpawner;
         private GameState _gameState;
 
         [Inject]
-        private void Construct(WaveSpawner waveSpawner, GameState gameState, PanelManager panelManager)
+        private void Construct(GameState gameState, PanelManager panelManager)
         {
-            _waveSpawner = waveSpawner;
             _gameState = gameState;
             _panelManager = panelManager;
         }
@@ -35,13 +33,7 @@ namespace Code.UI.Screens
         }
 
         private void ExitGame() => Application.Quit();
-        private async void OnPlayButtonPressed()
-        {
-            _playBtn.enabled = false;
-            _panelManager.CloseAllPanels();
-            _gameState.ChangeState(GameStates.Game);
-            await _waveSpawner.StartNextWave();
-        }
+        private void OnPlayButtonPressed() => _panelManager.OpenPanelByIndex(3);
 
         private void OnDestroy()
         {

@@ -15,7 +15,7 @@ MonoBehaviour:
   MaxHP: 100
   Speed: 0.5
   AttackRange: 2
-  AttackSpeed: 5
+  AttackSpeed: 0.5
   Damage: 5
   AttackCooldownDuration: 0.5
   ProjectilePrefab: {fileID: 8529925484358527838, guid: 0324a13f7a600db4ca91faf852737ca8,
