@@ -15,5 +15,5 @@ MonoBehaviour:
   Health: 10
   XP: 10
   MovementSpeed: 4
-  EnemyPrefab: {fileID: 7094201715290280081, guid: d4a05a7d61a5d2346872bed2c0482bc7,
+  PrefabReference: {fileID: 7094201715290280081, guid: d4a05a7d61a5d2346872bed2c0482bc7,
     type: 3}

@@ -281,10 +281,10 @@ GameObject:
   - component: {fileID: 4382760884559009855}
   - component: {fileID: 2978290924510460079}
   - component: {fileID: 6359825520876307594}
-  - component: {fileID: 3205228728972201094}
   - component: {fileID: 1447121977542039814}
   - component: {fileID: 6041535547990447353}
   - component: {fileID: 8379210639974160129}
+  - component: {fileID: 204285115237575463}
   m_Layer: 0
   m_Name: WeakEnemy
   m_TagString: Untagged
@@ -302,7 +302,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1153383454084148044}
@@ -383,33 +383,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &3205228728972201094
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5867812116043056734}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &1447121977542039814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -451,6 +424,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: {fileID: 6041535547990447353}
   _deathFx: {fileID: 0}
+--- !u!114 &204285115237575463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5867812116043056734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fd57a0d4e5bf5e4c9a7422713962467, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyConfig: {fileID: 11400000, guid: c4e5bd630ddfe084e90817a7960cb7e3, type: 2}
 --- !u!1 &6017142286184390216
 GameObject:
   m_ObjectHideFlags: 0
@@ -741,7 +727,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

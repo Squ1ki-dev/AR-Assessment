@@ -1,14 +1,11 @@
-using System.Collections;
-using UnityEngine;
-using TMPro;
-using Zenject;
-using Code.Enemies;
-using Code;
-using Cysharp.Threading.Tasks;
-using System.Threading.Tasks;
-using UnityEngine.XR.ARFoundation;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
+using Zenject;
+using Cysharp.Threading.Tasks;
+using Code.Enemies;
+using Code.Services;
 
 namespace Code.Wave
 {
@@ -23,6 +20,7 @@ namespace Code.Wave
 
         [Inject] private DiContainer _container;
 
+        private IAssetLoader _assetLoader;
         private Pose _placementPose;
         [SerializeField] private ARRaycastManager aRRaycastManager;
         [SerializeField] private ARPlaneManager _arPlaneManager;
@@ -35,6 +33,12 @@ namespace Code.Wave
         private bool placementPoseIsValid;
 
         public int CurrentWave => _waveSetup.CurrentWave;
+
+        [Inject]
+        public void Construct(IAssetLoader assetLoader)
+        {
+            _assetLoader = assetLoader;
+        }
 
         private void Start()
         {
@@ -78,10 +82,10 @@ namespace Code.Wave
             PlayerPrefs.Save();
         }
 
-        public async UniTask StartNextWave()
+        public async void StartNextWave()
         {
             await UniTask.Delay(5000);
-            
+
             if (_waveActive) return;
 
             _waveSetup.CurrentWave = PlayerPrefs.GetInt(Constants.Level, 1);
@@ -99,6 +103,8 @@ namespace Code.Wave
 
         private async UniTask SpawnEnemies(int waveNumber)
         {
+            if (!_waveActive) return; // Check if the wave is active before spawning
+
             _weakEnemyCount = _waveSetup.BaseWeakEnemyCount + (waveNumber - 1) * _waveSetup.EnemyIncrementPerWave;
             _normalEnemyCount = waveNumber >= 5
                 ? _waveSetup.BaseNormalEnemyCount + (waveNumber - 1) * _waveSetup.EnemyIncrementPerWave
@@ -107,8 +113,8 @@ namespace Code.Wave
             if (IsBossWave(waveNumber))
                 await SpawnBossEnemy(waveNumber);
 
-            await SpawnEnemyGroup(_weakEnemySO, _weakEnemyCount);
-            await SpawnEnemyGroup(_normalEnemySO, _normalEnemyCount);
+            await SpawnEnemyGroup(Constants.WeakEnemy, _weakEnemyCount);
+            await SpawnEnemyGroup(Constants.NormalEnemy, _normalEnemyCount);
         }
 
         private async UniTask SpawnBossEnemy(int waveNumber)
@@ -116,40 +122,49 @@ namespace Code.Wave
             int bossWaveWeakEnemies = _waveSetup.BossWaveWeakEnemies + (waveNumber - 1) * _waveSetup.EnemyIncrementPerWave;
             int bossWaveNormalEnemies = _waveSetup.BossWaveNormalEnemies + (waveNumber - 1) * _waveSetup.EnemyIncrementPerWave;
 
-            await SpawnEnemyGroup(_weakEnemySO, bossWaveWeakEnemies);
-            await SpawnEnemyGroup(_normalEnemySO, bossWaveNormalEnemies);
+            await SpawnEnemyGroup(Constants.WeakEnemy, bossWaveWeakEnemies);
+            await SpawnEnemyGroup(Constants.NormalEnemy, bossWaveNormalEnemies);
 
             Vector3 bossPosition = GetValidSpawnPosition();
-            GameObject bossEnemy = _container.InstantiatePrefab(_bossEnemySO.EnemyPrefab, bossPosition, Quaternion.identity, _enemyParent);
+            await LoadAndInstantiateAsync(Constants.BossAddress, bossPosition);
         }
 
-        private async UniTask SpawnEnemyGroup(EnemySO enemySO, int count)
+        private async UniTask SpawnEnemyGroup(string address, int count)
         {
             for (int i = 0; i < count; i++)
             {
                 UpdatePlacementPose();
 
-                if (!placementPoseIsValid) 
+                if (!placementPoseIsValid)
                 {
                     Debug.LogWarning("No valid AR plane found, skipping enemy spawn.");
                     continue;
                 }
 
                 Vector3 position = GetValidSpawnPosition();
-                if (position == Vector3.zero) 
+                if (position == Vector3.zero)
                 {
                     Debug.LogWarning("Failed to find a valid plane position.");
                     continue;
                 }
 
-                GameObject enemy = _container.InstantiatePrefab(enemySO.EnemyPrefab, position, Quaternion.identity, _enemyParent);
+                await LoadAndInstantiateAsync(address, position);
                 await UniTask.Delay(1000);
             }
         }
 
+        private async UniTask LoadAndInstantiateAsync(string address, Vector3 position)
+        {
+            GameObject enemyPrefab = await _assetLoader.LoadAssetAsync(address);
+            if (enemyPrefab != null)
+                _container.InstantiatePrefab(enemyPrefab, position, Quaternion.identity, _enemyParent);
+            else
+                Debug.LogError($"Failed to load Addressable asset at {address}");
+        }
+
         private Vector3 GetValidSpawnPosition()
         {
-            if (!placementPoseIsValid || _arPlaneManager.trackables.count == 0) 
+            if (!placementPoseIsValid || _arPlaneManager.trackables.count == 0)
             {
                 Debug.LogWarning("No valid spawn position found due to missing AR planes.");
                 return Vector3.zero;

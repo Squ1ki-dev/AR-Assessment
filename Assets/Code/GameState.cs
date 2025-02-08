@@ -50,10 +50,6 @@ namespace Code
                     _panelManager.OpenPanelByIndex(_menuIndex);
                     break;
 
-                case GameStates.PlayerPlacementState:
-                    _panelManager.CloseAllPanels();
-                    break;
-
                 case GameStates.Game:
                     IsBlockerActive(false);
                     _panelManager.CloseAllPanels();

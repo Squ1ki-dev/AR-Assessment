@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Code.Player;
 using Code;
-using CodeBase.Player;
 
 namespace Code.Health
 {

@@ -32,7 +32,7 @@ namespace Code.UI.Screens
 
         private void OnEnable()
         {
-            _nextWaveBtn.onClick.AddListener(async () => await HandleNextWave());
+            _nextWaveBtn.onClick.AddListener(HandleNextWave);
             _exitBtn.onClick.AddListener(() => ExitToMenu());
         }
 
@@ -42,17 +42,17 @@ namespace Code.UI.Screens
             _gameState.ChangeState(GameStates.Menu);
         }
 
-        private async UniTask HandleNextWave()
+        private void HandleNextWave()
         {
             _waveConfig.CurrentWave++;
             PlayerPrefs.SetInt(Constants.Level, _waveConfig.CurrentWave);
             Debug.Log($"Current Wave " + _waveConfig.CurrentWave);
-            await _waveSpawner.StartNextWave();
+            _waveSpawner.StartNextWave();
         }
 
         private void OnDestroy()
         {
-            _nextWaveBtn.onClick.RemoveListener(async () => await HandleNextWave());
+            _nextWaveBtn.onClick.RemoveListener(HandleNextWave);
             _exitBtn.onClick.RemoveListener(() => ExitToMenu());
         }
     }

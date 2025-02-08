@@ -4,8 +4,9 @@ using UnityEngine;
 using Code;
 using Code.Player;
 using Code.Services.Input;
+using Zenject;
 
-namespace CodeBase.Player
+namespace Code.Player
 {
     [RequireComponent(typeof(Rigidbody))]
     public class PlayerMovement : MonoBehaviour
@@ -14,7 +15,6 @@ namespace CodeBase.Player
         private Rigidbody _rigidbody;
         private IInputService _inputService;
         private Vector3 _move;
-        private bool _walking;
 
         private void Awake()
         {

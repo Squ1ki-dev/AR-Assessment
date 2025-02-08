@@ -37,8 +37,9 @@ namespace Code.UI.Screens
         private void OnPlayButtonPressed()
         {
             _playBtn.enabled = false;
-            _gameState.ChangeState(GameStates.PlayerPlacementState);
             _panelManager.CloseAllPanels();
+            _gameState.ChangeState(GameStates.Game);
+            _waveSpawner.StartNextWave();
         }
 
         private void OnDestroy()

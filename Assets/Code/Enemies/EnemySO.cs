@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Code.Enemies
 {
@@ -8,6 +9,6 @@ namespace Code.Enemies
         public int Health;
         public int XP;
         public float MovementSpeed;
-        public GameObject EnemyPrefab;
+        public GameObject PrefabReference;
     }
 }

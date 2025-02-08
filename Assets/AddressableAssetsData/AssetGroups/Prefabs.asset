@@ -16,7 +16,22 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 202cba93e91467c4b86f1098fcd819b4
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 3397487fb8b379b409a90bfa915fb731
+    m_Address: BossEnemy
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c8766cf87c186c04cb3e0b3ab1008cc4
+    m_Address: WeakEnemy
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d4a05a7d61a5d2346872bed2c0482bc7
+    m_Address: NormalEnemy
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1cd658497588c3348a11953e2edddf4b, type: 2}
   m_SchemaSet:

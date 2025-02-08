@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Code.Enemies;
+using Code.Services;
+using Code.Services.Input;
 using Code.UI;
 using Code.Wave;
 using UnityEngine;
@@ -14,14 +16,22 @@ namespace Code
         [SerializeField] private WaveSpawner _waveSpawner;
         [SerializeField] private GameState _gameState;
         [SerializeField] private PanelManager _panelManager;
-        [SerializeField] private Transform _enemyTarget;
+        [SerializeField] private GameObject playerPrefab;
 
         public override void InstallBindings()
         {
             BindWave();
-            BindEnemyTarget();
             BindGameState();
             BindUI();
+            BindAssetProvider();
+        }
+
+        private void BindAssetProvider()
+        {
+            Container
+                .Bind<IAssetLoader>()
+                .To<AddressableAssetProvider>()
+                .AsTransient();
         }
 
         private void BindGameState()
@@ -46,15 +56,6 @@ namespace Code
                 .Bind<WaveSpawner>()
                 .FromInstance(_waveSpawner)
                 .AsSingle();
-        }
-
-        private void BindEnemyTarget()
-        {
-            // Container
-            //     .Bind<Transform>()
-            //     .FromInstance(_enemyTarget)
-            //     .AsSingle()
-            //     .WhenInjectedInto<EnemyMovement>();
         }
     }
 }
