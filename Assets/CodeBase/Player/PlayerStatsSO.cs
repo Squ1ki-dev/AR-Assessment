@@ -9,7 +9,7 @@ namespace Code.Player
         public int Level;
         public int SelectedSkinID;
         public List<PlayerSkins> PlayerSkins;
-        public float MaxHP = 100f;
+        public int MaxHP = 100;
         public float Speed;
         public float AttackRange;
         public float MagicalAttackRange;
