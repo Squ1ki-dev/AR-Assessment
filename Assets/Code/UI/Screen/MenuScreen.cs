@@ -13,6 +13,7 @@ namespace Code.UI.Screens
 {
     public class MenuScreen : WindowBase
     {
+        [SerializeField] private int nextScreenIdx;
         [SerializeField] private Button _playBtn, _exitBtn;
         [SerializeField] private PanelManager _panelManager;
         [SerializeField] private ARPlaneManager _planeManager;
@@ -33,7 +34,7 @@ namespace Code.UI.Screens
         }
 
         private void ExitGame() => Application.Quit();
-        private void OnPlayButtonPressed() => _panelManager.OpenPanelByIndex(3);
+        private void OnPlayButtonPressed() => _panelManager.OpenPanelByIndex(nextScreenIdx);
 
         private void OnDestroy()
         {

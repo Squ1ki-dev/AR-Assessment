@@ -10,10 +10,7 @@ namespace Code.Enemy
         [SerializeField] private float _minDist;
         private PlayerMovement _player;
 
-        private void Start()
-        {
-            _player = FindObjectOfType<PlayerMovement>();
-        }
+        private void Start() => _player = FindObjectOfType<PlayerMovement>();
 
         private void FixedUpdate()
         {

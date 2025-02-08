@@ -1,3 +1,4 @@
+using CandyCoded.HapticFeedback;
 using UnityEngine;
 
 namespace Code.Player
@@ -21,6 +22,7 @@ namespace Code.Player
                 {
                     health.TakeDamage(_playerConfig.Damage);
                     ObjectPool.ReturnToPool(gameObject);
+                    HapticFeedback.LightFeedback();
                 }
             }
         }

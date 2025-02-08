@@ -16,6 +16,7 @@ namespace Code.UI.Screens
 {
     public class LoseScreen : WindowBase
     {
+        [SerializeField] private int menuScreenIdx;
         [SerializeField] private Button _restartBtn, _exitBtn;
         private PanelManager _panelManager;
         private GameState _gameState;
@@ -35,14 +36,11 @@ namespace Code.UI.Screens
 
         private void ExitToMenu() 
         { 
-            _panelManager.OpenPanelByIndex(0);
+            _panelManager.OpenPanelByIndex(menuScreenIdx);
             _gameState.ChangeState(GameStates.Menu);
         }
 
-        private void RestartLevel()
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
+        private void RestartLevel() => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
         private void OnDestroy()
         {

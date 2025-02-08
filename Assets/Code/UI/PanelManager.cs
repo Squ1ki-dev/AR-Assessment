@@ -5,13 +5,11 @@ namespace Code.UI
 {
     public class PanelManager : MonoBehaviour
     {
-        public static PanelManager Instance { get; private set;}
         [SerializeField] private List<PanelEntry> panelEntries;
         private Dictionary<int, WindowBase> panelDictionary;
 
         private void Awake()
         {
-            Instance = this;
             panelDictionary = new Dictionary<int, WindowBase>();
             foreach (var entry in panelEntries)
             {

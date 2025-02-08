@@ -12,7 +12,6 @@ public class PlayerHealth : MonoBehaviour, IHealth
     private int _current;
     public event Action HealthChanged;
 
-
     public int Current
     {
         get => _current;

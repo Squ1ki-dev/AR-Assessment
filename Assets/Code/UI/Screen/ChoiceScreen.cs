@@ -9,6 +9,7 @@ namespace Code.UI.Screens
 {
     public class ChoiceScreen : WindowBase
     {
+        [SerializeField] private int menuScreenIdx;
         [SerializeField] private Button _redOrbBtn, _blueOrbBtn, _backBtn;
         [SerializeField] private PlayerStatsSO _playerConfig;
         [SerializeField] private GameObject _redOrb, _blueOrb;
@@ -47,7 +48,7 @@ namespace Code.UI.Screens
             _gameState.ChangeState(GameStates.PlayerPlacementState);
         }
 
-        private void BackToMenu() => _panelManager.OpenPanelByIndex(0);
+        private void BackToMenu() => _panelManager.OpenPanelByIndex(menuScreenIdx);
 
         private void OnDisable()
         {

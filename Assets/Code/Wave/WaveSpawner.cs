@@ -12,6 +12,7 @@ namespace Code.Wave
 {
     public class WaveSpawner : MonoBehaviour
     {
+        [SerializeField] private int _loseScreenIdx;
         [SerializeField] private Transform _spawnPoint;
         [SerializeField] private Transform _enemyParent;
         [SerializeField] private EnemySO _weakEnemySO;
@@ -33,7 +34,7 @@ namespace Code.Wave
         private float _waveTime;
         private bool _waveActive;
         private bool placementPoseIsValid;
-        private int _activeEnemyCount; // Track number of active enemies
+        private int _activeEnemyCount;
 
         public int CurrentWave => _waveSetup.CurrentWave;
 
@@ -95,7 +96,7 @@ namespace Code.Wave
 
             _waveSetup.CurrentWave = PlayerPrefs.GetInt(Constants.Level, 1);
             _waveActive = true;
-            _activeEnemyCount = 0; // Reset enemy count
+            _activeEnemyCount = 0;
 
             await SpawnEnemies(_waveSetup.CurrentWave);
 
@@ -189,16 +190,9 @@ namespace Code.Wave
                 return null;
             }
 
-            if (_enemyParent.Find(enemyPrefab.name) != null)
-            {
-                Debug.LogWarning($"Duplicate enemy detected: {enemyPrefab.name}");
-                return null;
-            }
-
             GameObject enemy = _container.InstantiatePrefab(enemyPrefab, position, Quaternion.identity, _enemyParent);
             return enemy;
         }
-
 
         private Vector3 GetValidSpawnPosition()
         {
@@ -217,9 +211,9 @@ namespace Code.Wave
         {
             _activeEnemyCount--;
 
-            if (_activeEnemyCount <= 0) // No enemies left
+            if (_activeEnemyCount <= 0)
             {
-                _panelManager.OpenPanelByIndex(1);
+                _panelManager.OpenPanelByIndex(_loseScreenIdx);
                 EndWave();
             }
         }

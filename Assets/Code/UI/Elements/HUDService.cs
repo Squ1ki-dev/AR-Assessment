@@ -22,9 +22,7 @@ namespace Code.UI.Elements
 
         private void Start()
         {
-            _gameState = FindObjectOfType<GameState>();
             _levelText.text = "Level: " + _waveConfig.CurrentWave.ToString();
-
             CheckForValidState();
         }
 

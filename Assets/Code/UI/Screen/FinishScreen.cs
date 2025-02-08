@@ -16,6 +16,7 @@ namespace Code.UI.Screens
 {
     public class FinishScreen : WindowBase
     {
+        [SerializeField] private int menuScreenIdx;
         [SerializeField] private Button _nextWaveBtn, _exitBtn;
         [SerializeField] private WaveSetupSO _waveConfig;
         private WaveSpawner _waveSpawner;
@@ -38,7 +39,7 @@ namespace Code.UI.Screens
 
         private void ExitToMenu() 
         { 
-            _panelManager.OpenPanelByIndex(0);
+            _panelManager.OpenPanelByIndex(menuScreenIdx);
             _gameState.ChangeState(GameStates.Menu);
         }
 

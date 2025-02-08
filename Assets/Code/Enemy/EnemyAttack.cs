@@ -63,8 +63,7 @@ public class EnemyAttack : MonoBehaviour
         {
             Debug.Log($"Hit Player: {hit.name}");
             hit.transform.GetComponent<IHealth>()?.TakeDamage(enemySO.Damage);
-            if (PlayerPrefs.GetInt(Constants.VibrationParameter) == 1)
-                HapticFeedback.LightFeedback();
+            HapticFeedback.LightFeedback();
         }
     }
 
