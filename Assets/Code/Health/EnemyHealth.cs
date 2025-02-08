@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Code.Enemies;
+using Code.Enemy;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;

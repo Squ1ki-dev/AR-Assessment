@@ -7,5 +7,6 @@ namespace Code
         public const string WeakEnemy = "WeakEnemy";
         public const string NormalEnemy = "NormalEnemy";
         public const string BossAddress = "BossEnemy";
+        public const string VibrationParameter = "VibrationParameter";
     }
 }

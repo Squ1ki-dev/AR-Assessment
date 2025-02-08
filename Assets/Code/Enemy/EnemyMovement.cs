@@ -1,11 +1,12 @@
 using UnityEngine;
 using Zenject;
 
-namespace Code.Enemies
+namespace Code.Enemy
 {
     public class EnemyMovement : MonoBehaviour
     {
         [SerializeField] private EnemySO _enemyConfig;
+        [SerializeField] private float _minDist;
         private Transform _player;
 
         [Inject]
@@ -22,8 +23,9 @@ namespace Code.Enemies
             Vector3 direction = (_player.position - transform.position).normalized;
             float distance = Vector3.Distance(transform.position, _player.position);
 
-            if (distance <= 0.5f)
+            if (distance <= _minDist)
                 return;
+
             transform.Translate(direction * _enemyConfig.MovementSpeed * Time.fixedDeltaTime);
             Debug.Log($"[EnemyMovement] Moving towards {_player.name} at speed {_enemyConfig.MovementSpeed}");
         }

@@ -1148,8 +1148,6 @@ MonoBehaviour:
   _waveSpawner: {fileID: 417713080}
   _gameState: {fileID: 1270228166}
   _panelManager: {fileID: 2099970470}
-  playerPrefab: {fileID: 486833101314850461, guid: 758f3e96e7523834d8e6fe6a63008663,
-    type: 3}
 --- !u!114 &1199163632
 MonoBehaviour:
   m_ObjectHideFlags: 0

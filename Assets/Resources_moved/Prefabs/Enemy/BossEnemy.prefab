@@ -24,6 +24,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: BossEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 6041535547990447353, guid: c8766cf87c186c04cb3e0b3ab1008cc4,
+        type: 3}
+      propertyPath: _enemySO
+      value: 
+      objectReference: {fileID: 11400000, guid: 37314eed75ad20540a35854e8f4de650,
+        type: 2}
+    - target: {fileID: 6747635543530247017, guid: c8766cf87c186c04cb3e0b3ab1008cc4,
+        type: 3}
+      propertyPath: enemySO
+      value: 
+      objectReference: {fileID: 11400000, guid: 37314eed75ad20540a35854e8f4de650,
+        type: 2}
     - target: {fileID: 6984597633181948993, guid: c8766cf87c186c04cb3e0b3ab1008cc4,
         type: 3}
       propertyPath: m_LocalPosition.x

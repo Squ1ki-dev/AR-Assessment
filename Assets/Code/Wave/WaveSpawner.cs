@@ -4,7 +4,7 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using Zenject;
 using Cysharp.Threading.Tasks;
-using Code.Enemies;
+using Code.Enemy;
 using Code.Services;
 
 namespace Code.Wave
@@ -82,7 +82,7 @@ namespace Code.Wave
             PlayerPrefs.Save();
         }
 
-        public async void StartNextWave()
+        public async UniTask StartNextWave()
         {
             await UniTask.Delay(5000);
 
@@ -103,7 +103,7 @@ namespace Code.Wave
 
         private async UniTask SpawnEnemies(int waveNumber)
         {
-            if (!_waveActive) return; // Check if the wave is active before spawning
+            if (!_waveActive) return;
 
             _weakEnemyCount = _waveSetup.BaseWeakEnemyCount + (waveNumber - 1) * _waveSetup.EnemyIncrementPerWave;
             _normalEnemyCount = waveNumber >= 5
@@ -156,11 +156,14 @@ namespace Code.Wave
         private async UniTask LoadAndInstantiateAsync(string address, Vector3 position)
         {
             GameObject enemyPrefab = await _assetLoader.LoadAssetAsync(address);
-            if (enemyPrefab != null)
-                _container.InstantiatePrefab(enemyPrefab, position, Quaternion.identity, _enemyParent);
-            else
+            if (enemyPrefab == null)
+            {
                 Debug.LogError($"Failed to load Addressable asset at {address}");
+                return;
+            }
+            _container.InstantiatePrefab(enemyPrefab, position, Quaternion.identity, _enemyParent);
         }
+
 
         private Vector3 GetValidSpawnPosition()
         {

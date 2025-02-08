@@ -8,13 +8,13 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Hittable
+  - 
   - Water
   - UI
   - Player
-  - 
-  - 
-  - 
+  - Attack
+  - Enemy
+  - Hittable
   - 
   - 
   - 

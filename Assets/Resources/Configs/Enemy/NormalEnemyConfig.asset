@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 10
   XP: 10
-  MovementSpeed: 4
+  MovementSpeed: 0.4
+  AttackSpeed: 0.2
+  Damage: 10
   PrefabReference: {fileID: 7094201715290280081, guid: d4a05a7d61a5d2346872bed2c0482bc7,
     type: 3}

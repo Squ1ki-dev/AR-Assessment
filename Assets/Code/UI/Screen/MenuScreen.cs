@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Code.Wave;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -34,12 +35,12 @@ namespace Code.UI.Screens
         }
 
         private void ExitGame() => Application.Quit();
-        private void OnPlayButtonPressed()
+        private async void OnPlayButtonPressed()
         {
             _playBtn.enabled = false;
             _panelManager.CloseAllPanels();
             _gameState.ChangeState(GameStates.Game);
-            _waveSpawner.StartNextWave();
+            await _waveSpawner.StartNextWave();
         }
 
         private void OnDestroy()

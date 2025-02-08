@@ -1,18 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CandyCoded.HapticFeedback;
+using Zenject;
+using Cysharp.Threading.Tasks;
 
-public class PlayerAttack : MonoBehaviour
+namespace Code.Player
 {
-    // Start is called before the first frame update
-    void Start()
+    public class PlayerAttack : MonoBehaviour
     {
-        
-    }
+        [SerializeField] private Transform firePoint;
+        [SerializeField] private PlayerStatsSO _playerConfig;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private float shootTimer = 0f;
+
+        private void Update()
+        {
+            shootTimer += Time.deltaTime;
+
+            if (shootTimer >= _playerConfig.AttackCooldownDuration)
+            {
+                Shoot();
+                shootTimer = 0f;
+            }
+        }
+
+        private void Shoot()
+        {
+            if (_playerConfig.ProjectilePrefab == null || firePoint == null)
+                return;
+
+            GameObject projectile = ObjectPool.SpawnObject(_playerConfig.ProjectilePrefab, firePoint.position, firePoint.rotation);
+
+            ReturnToPoolAfterDelay(projectile, 5000).Forget();
+        }
+
+        private async UniTaskVoid ReturnToPoolAfterDelay(GameObject obj, int delayMilliseconds)
+        {
+            await UniTask.Delay(delayMilliseconds);
+            ObjectPool.ReturnToPool(obj);
+        }
+
+        // private int MagicalHit() =>
+        //     Physics.OverlapSphereNonAlloc(_attackPoint.position, _playerConfig.AttackRange, _hits, _layerMask);
     }
 }

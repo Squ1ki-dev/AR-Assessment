@@ -42,12 +42,12 @@ namespace Code.UI.Screens
             _gameState.ChangeState(GameStates.Menu);
         }
 
-        private void HandleNextWave()
+        private async void HandleNextWave()
         {
             _waveConfig.CurrentWave++;
             PlayerPrefs.SetInt(Constants.Level, _waveConfig.CurrentWave);
             Debug.Log($"Current Wave " + _waveConfig.CurrentWave);
-            _waveSpawner.StartNextWave();
+            await _waveSpawner.StartNextWave();
         }
 
         private void OnDestroy()

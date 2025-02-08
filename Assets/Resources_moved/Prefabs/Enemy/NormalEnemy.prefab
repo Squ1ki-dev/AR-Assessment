@@ -14,6 +14,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 0b69b4be31fcde645b4f357e058d1f09,
         type: 2}
+    - target: {fileID: 2096173789459812383, guid: c8766cf87c186c04cb3e0b3ab1008cc4,
+        type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2978290924510460079, guid: c8766cf87c186c04cb3e0b3ab1008cc4,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -24,6 +29,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: NormalEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 5867812116043056734, guid: c8766cf87c186c04cb3e0b3ab1008cc4,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6041535547990447353, guid: c8766cf87c186c04cb3e0b3ab1008cc4,
+        type: 3}
+      propertyPath: _enemySO
+      value: 
+      objectReference: {fileID: 11400000, guid: 0b69b4be31fcde645b4f357e058d1f09,
+        type: 2}
+    - target: {fileID: 6747635543530247017, guid: c8766cf87c186c04cb3e0b3ab1008cc4,
+        type: 3}
+      propertyPath: enemySO
+      value: 
+      objectReference: {fileID: 11400000, guid: 0b69b4be31fcde645b4f357e058d1f09,
+        type: 2}
     - target: {fileID: 6984597633181948993, guid: c8766cf87c186c04cb3e0b3ab1008cc4,
         type: 3}
       propertyPath: m_LocalPosition.x

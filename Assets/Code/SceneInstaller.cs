@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Code.Enemies;
 using Code.Services;
-using Code.Services.Input;
 using Code.UI;
 using Code.Wave;
 using UnityEngine;
@@ -16,8 +14,6 @@ namespace Code
         [SerializeField] private WaveSpawner _waveSpawner;
         [SerializeField] private GameState _gameState;
         [SerializeField] private PanelManager _panelManager;
-        [SerializeField] private GameObject playerPrefab;
-
         public override void InstallBindings()
         {
             BindWave();

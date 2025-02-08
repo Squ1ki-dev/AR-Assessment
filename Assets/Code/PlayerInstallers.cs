@@ -15,6 +15,10 @@ namespace Code.Installers
                 .Bind<PlayerMovement>()
                 .FromInstance(playerMovement)
                 .AsSingle();
+
+            Container
+                .Bind<Transform>()
+                .FromInstance(playerMovement.transform);
         }
     }
 }
