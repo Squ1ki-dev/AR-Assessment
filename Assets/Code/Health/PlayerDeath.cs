@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Code.Player;
 using Code;
+using CodeBase.Player;
 
-public class PlayerDeath : MonoBehaviour
+namespace Code.Health
+{
+    public class PlayerDeath : MonoBehaviour
 {
     [SerializeField] private PlayerHealth _playerHealth;
     //[SerializeField] private PlayerAttack playerAttack;
-    //[SerializeField] private PlayerMove playerMove;
+    [SerializeField] private PlayerMovement _playerMovement;
     [SerializeField] private GameObject _deathFx;
     private GameState _gameState;
     private bool _isDead;
@@ -31,9 +34,10 @@ public class PlayerDeath : MonoBehaviour
     private void Die()
     {   
         _isDead = true;
-        //playerMove.enabled = false;
+        _playerMovement.enabled = false;
         //playerAttack.enabled = false;
         _gameState.ChangeState(GameStates.Lose);
-        Instantiate(_deathFx, transform.position, Quaternion.identity);
     }
+}
+
 }

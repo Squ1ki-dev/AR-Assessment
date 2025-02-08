@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c00276bf05ed88b4388f944f1f544586, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damageText: {fileID: 0}
+  _damageText: {fileID: 674026381172691212}
   _playerConfig: {fileID: 11400000, guid: b7e89b45e6bb249499fe1078f68ee029, type: 2}
 --- !u!114 &290988884533859076
 MonoBehaviour:

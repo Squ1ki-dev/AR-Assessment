@@ -8,7 +8,7 @@ using Code.Services.Input;
 namespace CodeBase.Player
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class PlayerMove : MonoBehaviour
+    public class PlayerMovement : MonoBehaviour
     {
         [SerializeField] private PlayerStatsSO playerConfig;
         private Rigidbody _rigidbody;
@@ -28,29 +28,14 @@ namespace CodeBase.Player
             _move = new Vector3(_inputService.Axis.x, 0f, _inputService.Axis.y).normalized;
 
             if (_move.sqrMagnitude > Constants.Epsilon)
-            {
-                if (!_walking)
-                {
-                    _walking = true;
-                    StartCoroutine(PlayerMovement());
-                }
-            }
-            else
-            {
-                _walking = false;
-                StopCoroutine(PlayerMovement());
-            }
+                Move();
         }
 
-        private IEnumerator PlayerMovement()
+        private void Move()
         {
-            while (_walking)
-            {
-                _rigidbody.MovePosition(_rigidbody.position + _move * playerConfig.Speed * Time.deltaTime);
-                if (_move != Vector3.zero)
-                    _rigidbody.rotation = Quaternion.Slerp(_rigidbody.rotation, Quaternion.LookRotation(_move), Time.deltaTime * 5.0f);
-                yield return null;
-            }
+            _rigidbody.MovePosition(_rigidbody.position + _move * playerConfig.Speed * Time.deltaTime);
+            if (_move != Vector3.zero)
+                _rigidbody.rotation = Quaternion.Slerp(_rigidbody.rotation, Quaternion.LookRotation(_move), Time.deltaTime * 5.0f);
         }
     }
 }
