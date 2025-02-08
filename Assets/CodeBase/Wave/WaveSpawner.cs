@@ -6,6 +6,9 @@ using Code.Enemies;
 using Code;
 using Cysharp.Threading.Tasks;
 using System.Threading.Tasks;
+using UnityEngine.XR.ARFoundation;
+using System.Collections.Generic;
+using UnityEngine.XR.ARSubsystems;
 
 namespace Code.Wave
 {
@@ -20,10 +23,17 @@ namespace Code.Wave
 
         [Inject] private DiContainer _container;
 
+        private Pose _placementPose;
+        [SerializeField] private ARRaycastManager aRRaycastManager;
+        [SerializeField] private ARPlaneManager _arPlaneManager;
+        private List<ARRaycastHit> hits = new List<ARRaycastHit>();
+
         private int _weakEnemyCount;
         private int _normalEnemyCount;
         private float _waveTime;
         private bool _waveActive;
+        private bool placementPoseIsValid;
+
         public int CurrentWave => _waveSetup.CurrentWave;
 
         private void Start()
@@ -40,6 +50,28 @@ namespace Code.Wave
                 EndWave();
         }
 
+        private void UpdatePlacementPose()
+        {
+            if (_arPlaneManager.trackables.count == 0)
+            {
+                placementPoseIsValid = false;
+                Debug.LogWarning("No AR planes detected.");
+                return;
+            }
+
+            var screenCenter = new Vector2(Screen.width / 2, Screen.height / 2);
+            aRRaycastManager.Raycast(screenCenter, hits, TrackableType.PlaneEstimated);
+
+            placementPoseIsValid = hits.Count > 0;
+            if (placementPoseIsValid)
+            {
+                _placementPose = hits[0].pose;
+                Debug.Log($"Valid placement found at {_placementPose.position}");
+            }
+            else
+                Debug.LogWarning("No valid AR plane detected.");
+        }
+
         private void SaveWaveNumber()
         {
             PlayerPrefs.SetInt(Constants.Level, _waveSetup.CurrentWave);
@@ -48,6 +80,8 @@ namespace Code.Wave
 
         public async UniTask StartNextWave()
         {
+            await UniTask.Delay(5000);
+            
             if (_waveActive) return;
 
             _waveSetup.CurrentWave = PlayerPrefs.GetInt(Constants.Level, 1);
@@ -85,7 +119,7 @@ namespace Code.Wave
             await SpawnEnemyGroup(_weakEnemySO, bossWaveWeakEnemies);
             await SpawnEnemyGroup(_normalEnemySO, bossWaveNormalEnemies);
 
-            Vector3 bossPosition = GetRandomPositionAround(_spawnPoint.position, _waveSetup.MinSpawnRadius, _waveSetup.MaxSpawnRadius);
+            Vector3 bossPosition = GetValidSpawnPosition();
             GameObject bossEnemy = _container.InstantiatePrefab(_bossEnemySO.EnemyPrefab, bossPosition, Quaternion.identity, _enemyParent);
         }
 
@@ -93,21 +127,35 @@ namespace Code.Wave
         {
             for (int i = 0; i < count; i++)
             {
-                Vector3 position = GetRandomPositionAround(_spawnPoint.position, _waveSetup.MinSpawnRadius, _waveSetup.MaxSpawnRadius);
+                UpdatePlacementPose();
+
+                if (!placementPoseIsValid) 
+                {
+                    Debug.LogWarning("No valid AR plane found, skipping enemy spawn.");
+                    continue;
+                }
+
+                Vector3 position = GetValidSpawnPosition();
+                if (position == Vector3.zero) 
+                {
+                    Debug.LogWarning("Failed to find a valid plane position.");
+                    continue;
+                }
+
                 GameObject enemy = _container.InstantiatePrefab(enemySO.EnemyPrefab, position, Quaternion.identity, _enemyParent);
                 await UniTask.Delay(1000);
             }
         }
 
-        private Vector3 GetRandomPositionAround(Vector3 center, float minRadius, float maxRadius)
+        private Vector3 GetValidSpawnPosition()
         {
-            float radius = Random.Range(minRadius, maxRadius);
-            float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
+            if (!placementPoseIsValid || _arPlaneManager.trackables.count == 0) 
+            {
+                Debug.LogWarning("No valid spawn position found due to missing AR planes.");
+                return Vector3.zero;
+            }
 
-            float xOffset = Mathf.Cos(angle) * radius;
-            float zOffset = Mathf.Sin(angle) * radius;
-
-            return new Vector3(center.x + xOffset, center.y, center.z + zOffset);
+            return _placementPose.position;
         }
 
         private bool IsBossWave(int waveNumber) => waveNumber % _waveSetup.BossWaveInterval == 0;

@@ -12,7 +12,7 @@ namespace Code.UI.Screens
 {
     public class MenuScreen : WindowBase
     {
-        [SerializeField] private Button _playBtn;
+        [SerializeField] private Button _playBtn, _exitBtn;
         [SerializeField] private PanelManager _panelManager;
         [SerializeField] private ARPlaneManager _planeManager;
 
@@ -30,9 +30,10 @@ namespace Code.UI.Screens
         private void OnEnable()
         {
             _playBtn.onClick.AddListener(async() => await OnPlayButtonPressed());
+            _exitBtn.onClick.AddListener(ExitGame);
         }
 
-        private void OpenSettings() => _panelManager.OpenPanelByIndex(1);
+        private void ExitGame() => Application.Quit();
         private async UniTask OnPlayButtonPressed()
         {
             _playBtn.enabled = false;
@@ -45,6 +46,7 @@ namespace Code.UI.Screens
         private void OnDestroy()
         {
             _playBtn.onClick.RemoveListener(async() => await OnPlayButtonPressed());
+            _exitBtn.onClick.RemoveListener(ExitGame);
         }
     }
 }
