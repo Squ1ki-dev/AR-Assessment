@@ -288,6 +288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04ab34c522d122a4d81e12f7ce321430, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _loseScreenIdx: 3
   _playerHealth: {fileID: 6624719753169348046}
   playerAttack: {fileID: 8958620303992798540}
   _playerMovement: {fileID: 7912815021685715474}

@@ -772,6 +772,8 @@ GameObject:
   m_Component:
   - component: {fileID: 417713081}
   - component: {fileID: 417713080}
+  - component: {fileID: 417713083}
+  - component: {fileID: 417713082}
   m_Layer: 0
   m_Name: WaveSpawner
   m_TagString: Untagged
@@ -791,14 +793,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf4abfec2e2369143822f32b6a3a52d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnPoint: {fileID: 417713081}
-  _enemyParent: {fileID: 417713081}
-  _weakEnemySO: {fileID: 11400000, guid: c4e5bd630ddfe084e90817a7960cb7e3, type: 2}
-  _normalEnemySO: {fileID: 11400000, guid: 0b69b4be31fcde645b4f357e058d1f09, type: 2}
-  _bossEnemySO: {fileID: 11400000, guid: 37314eed75ad20540a35854e8f4de650, type: 2}
   _waveSetup: {fileID: 11400000, guid: fbf5cb6ef5ccdb74398d500fc307b3fc, type: 2}
-  aRRaycastManager: {fileID: 565700065}
-  _arPlaneManager: {fileID: 565700066}
 --- !u!4 &417713081
 Transform:
   m_ObjectHideFlags: 0
@@ -814,6 +809,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &417713082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417713079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e64a19ef77a2b6468e4d5067977a800, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _arRaycastManager: {fileID: 565700065}
+  _arPlaneManager: {fileID: 565700066}
+--- !u!114 &417713083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417713079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c10aa544fe3edc4d9be8df441835576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _winScreenIdx: 2
+  _enemyParent: {fileID: 417713081}
 --- !u!1 &449022719
 GameObject:
   m_ObjectHideFlags: 0
@@ -871,7 +894,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: NEXT WAVE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -904,7 +927,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1813,6 +1836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e37d40e91735f544891940785a4fe4f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuScreenIdx: 0
   _redOrbBtn: {fileID: 1309623450}
   _blueOrbBtn: {fileID: 2136562205}
   _backBtn: {fileID: 580530056}
@@ -2089,6 +2113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1718f717fac8fef42a1ce2a6943d9ed8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuScreenIdx: 0
   _restartBtn: {fileID: 1561998910}
   _exitBtn: {fileID: 2075039868}
 --- !u!1001 &1174694516
@@ -2240,6 +2265,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _waveSpawner: {fileID: 417713080}
+  _enemySpawner: {fileID: 417713083}
+  _placementHandler: {fileID: 417713082}
   _gameState: {fileID: 1270228166}
   _panelManager: {fileID: 2099970470}
 --- !u!114 &1199163632
@@ -2342,6 +2369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db5cc22acf8fe6b4b82e3e059faa687b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _menuScreenIdx: 0
   _nextWaveBtn: {fileID: 1499844415}
   _exitBtn: {fileID: 2047978106}
   _waveConfig: {fileID: 11400000, guid: fbf5cb6ef5ccdb74398d500fc307b3fc, type: 2}
@@ -2413,8 +2441,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _menuIndex: 0
-  _finishIndex: 1
-  _loseIndex: 2
+  _finishIndex: 2
+  _loseIndex: 3
   _blockerImg: {fileID: 53569931}
   _planeManager: {fileID: 565700066}
   CurrentState: 0
@@ -2645,6 +2673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd2e99d98fcb18645b10b84608bcd447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextScreenIdx: 1
   _playBtn: {fileID: 197838285}
   _exitBtn: {fileID: 567104053}
   _panelManager: {fileID: 2099970470}
@@ -2832,7 +2861,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: EXIT
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2865,7 +2894,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -4384,11 +4413,11 @@ MonoBehaviour:
   - index: 0
     panel: {fileID: 1310113822}
   - index: 1
-    panel: {fileID: 1246114116}
-  - index: 2
-    panel: {fileID: 1126046059}
-  - index: 3
     panel: {fileID: 813878356}
+  - index: 2
+    panel: {fileID: 1246114116}
+  - index: 3
+    panel: {fileID: 1126046059}
 --- !u!1 &2136562201
 GameObject:
   m_ObjectHideFlags: 0
@@ -4614,8 +4643,8 @@ SceneRoots:
   - {fileID: 1174694516}
   - {fileID: 2138806244}
   - {fileID: 1270228167}
-  - {fileID: 1199163633}
   - {fileID: 417713081}
   - {fileID: 379440891}
   - {fileID: 1333828171}
   - {fileID: 207721546}
+  - {fileID: 1199163633}

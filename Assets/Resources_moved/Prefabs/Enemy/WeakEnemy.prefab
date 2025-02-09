@@ -641,7 +641,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyConfig: {fileID: 11400000, guid: c4e5bd630ddfe084e90817a7960cb7e3, type: 2}
-  _minDist: 0.3
+  _minDist: 0.2
 --- !u!114 &6747635543530247017
 MonoBehaviour:
   m_ObjectHideFlags: 0

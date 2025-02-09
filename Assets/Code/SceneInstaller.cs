@@ -12,22 +12,43 @@ namespace Code
     public class SceneInstaller : MonoInstaller
     {
         [SerializeField] private WaveSpawner _waveSpawner;
+        [SerializeField] private EnemySpawner _enemySpawner;
+        [SerializeField] private PlacementHandler _placementHandler;
         [SerializeField] private GameState _gameState;
         [SerializeField] private PanelManager _panelManager;
+
         public override void InstallBindings()
         {
             BindWave();
+            BindEnemySpawner();
+            BindPlacementHandler();
             BindGameState();
             BindUI();
             BindAssetProvider();
         }
 
-        private void BindAssetProvider()
+        private void BindWave()
         {
             Container
-                .Bind<IAssetLoader>()
-                .To<AddressableAssetProvider>()
-                .AsTransient();
+                .Bind<WaveSpawner>()
+                .FromInstance(_waveSpawner)
+                .AsSingle();
+        }
+
+        private void BindEnemySpawner()
+        {
+            Container
+                .Bind<EnemySpawner>()
+                .FromInstance(_enemySpawner)
+                .AsSingle();
+        }
+
+        private void BindPlacementHandler()
+        {
+            Container
+                .Bind<PlacementHandler>()
+                .FromInstance(_placementHandler)
+                .AsSingle();
         }
 
         private void BindGameState()
@@ -46,12 +67,12 @@ namespace Code
                 .AsSingle();
         }
 
-        private void BindWave()
+        private void BindAssetProvider()
         {
             Container
-                .Bind<WaveSpawner>()
-                .FromInstance(_waveSpawner)
-                .AsSingle();
+                .Bind<IAssetLoader>()
+                .To<AddressableAssetProvider>()
+                .AsTransient();
         }
     }
 }

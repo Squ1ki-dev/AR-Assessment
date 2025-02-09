@@ -16,7 +16,7 @@ namespace Code.UI.Screens
 {
     public class FinishScreen : WindowBase
     {
-        [SerializeField] private int menuScreenIdx;
+        [SerializeField] private int _menuScreenIdx;
         [SerializeField] private Button _nextWaveBtn, _exitBtn;
         [SerializeField] private WaveSetupSO _waveConfig;
         private WaveSpawner _waveSpawner;
@@ -39,12 +39,13 @@ namespace Code.UI.Screens
 
         private void ExitToMenu() 
         { 
-            _panelManager.OpenPanelByIndex(menuScreenIdx);
+            _panelManager.OpenPanelByIndex(_menuScreenIdx);
             _gameState.ChangeState(GameStates.Menu);
         }
 
         private async void HandleNextWave()
         {
+            _panelManager.CloseAllPanels();
             _waveConfig.CurrentWave++;
             PlayerPrefs.SetInt(Constants.Level, _waveConfig.CurrentWave);
             Debug.Log($"Current Wave " + _waveConfig.CurrentWave);

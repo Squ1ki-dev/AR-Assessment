@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -41,6 +42,11 @@ namespace Code.UI
             {
                 panel.Close();
             }
+        }
+
+        internal void OpenPanelByIndex(object winScreenIdx)
+        {
+            throw new NotImplementedException();
         }
     }
 }
